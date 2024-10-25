@@ -16,7 +16,10 @@
     "!**/*.scss"
   ],
   "dependencies": {
+    "@bbva-experience-components/bbva-button-default": "^3.4.7",
+    "@bbva-experience-components/bbva-progress-content": "^1.5.0",
     "@bbva-web-components/bbva-core-lit-helpers": "^1.0.0",
+    "@bbva-web-components/bbva-foundations-spinner": "^1.0.14",
     "@bbva-web-components/bbva-foundations-styles": "^2.0.0",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
