@@ -16,6 +16,7 @@
     "!**/*.scss"
   ],
   "dependencies": {
+    "@pokedex/pokemones-dm":"git@github.com:PaulaBlanco2/pokemones-dm.git#main",
     "@bbva-experience-components/bbva-button-default": "^3.4.7",
     "@bbva-experience-components/bbva-progress-content": "^1.5.0",
     "@bbva-web-components/bbva-core-lit-helpers": "^1.0.0",
