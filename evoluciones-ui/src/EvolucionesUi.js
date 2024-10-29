@@ -19,7 +19,7 @@ export class EvolucionesUi extends LitElement {
 
   constructor() {
     super();
-    this.pokemonId = 10;
+    this.pokemonId = null;
     this.pokemonDetails = {};
     this.evolutions = [];
     this.noEvolutionsMessage = '';
@@ -34,16 +34,13 @@ export class EvolucionesUi extends LitElement {
   }
 
   firstUpdated() {
-    this.addEventListener('pokemon-details-loaded', (e) => {
-      this.pokemonDetails = e.detail.pokemonDetails;
-      this.evolutions = e.detail.evolutions;
-      this.noEvolutionsMessage = e.detail.noEvolutionsMessage;
-      this.loading = false;
-    });
-
-    const pokemonesDm = this.shadowRoot.querySelector('pokemones-dm');
-    if (pokemonesDm) {
-      pokemonesDm.fetchPokemonDetails(this.pokemonId);
+    const urlParams = new URLSearchParams(window.location.search);
+    const pokemonName = urlParams.get('name');
+    if (pokemonName) {
+      const pokemonesDm = this.shadowRoot.querySelector('pokemones-dm');
+      if (pokemonesDm) {
+        pokemonesDm.fetchPokemonDetails(pokemonName); 
+      }
     }
   }
 
