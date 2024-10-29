@@ -3,8 +3,7 @@ import { getComponentSharedStyles } from '@bbva-web-components/bbva-core-lit-hel
 import styles from './evoluciones-ui.css.js';
 import '@bbva-experience-components/bbva-button-default/bbva-button-default.js';
 import '@bbva-experience-components/bbva-progress-content/bbva-progress-content.js';
-import '@pokedex/pokemones-dm/pokemones-dm.js'
-
+import '@pokedex/pokemones-dm/pokemones-dm.js';
 
 export class EvolucionesUi extends LitElement {
   static get properties() {
@@ -12,19 +11,17 @@ export class EvolucionesUi extends LitElement {
       pokemonDetails: { type: Object },
       evolutions: { type: Array },
       noEvolutionsMessage: { type: String },
-      pokemonId: { type: Number },
-      loading: { type: Boolean } 
+      loading: { type: Boolean }
     };
   }
 
   constructor() {
     super();
-    this.pokemonId = null;
     this.pokemonDetails = {};
     this.evolutions = [];
     this.noEvolutionsMessage = '';
-    this.loading = true; 
-  }  
+    this.loading = true;
+  }
 
   static get styles() {
     return [
@@ -34,12 +31,19 @@ export class EvolucionesUi extends LitElement {
   }
 
   firstUpdated() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const pokemonName = urlParams.get('name');
-    if (pokemonName) {
-      const pokemonesDm = this.shadowRoot.querySelector('pokemones-dm');
-      if (pokemonesDm) {
-        pokemonesDm.fetchPokemonDetails(pokemonName); 
+    // Escuchar el evento que trae los detalles del Pokémon
+    this.addEventListener('pokemon-details-loaded', (e) => {
+      this.pokemonDetails = e.detail.pokemonDetails;
+      this.evolutions = e.detail.evolutions;
+      this.noEvolutionsMessage = e.detail.noEvolutionsMessage;
+      this.loading = false;
+    });
+
+    const pokemonesDm = this.shadowRoot.querySelector('pokemones-dm');
+    if (pokemonesDm) {
+      const pokemonId = this.getAttribute('pokemon-id'); 
+      if (pokemonId) {
+        pokemonesDm.fetchPokemonDetails(pokemonId);
       }
     }
   }
@@ -81,9 +85,7 @@ export class EvolucionesUi extends LitElement {
     `;
   }
 
-
   goTopokemon() {
     this.navigate('pokemon');
   }
 }
-
